@@ -51,7 +51,7 @@ The application sends webhook notifications for record operations (create, updat
 ```typescript
 // Define webhook URLs for default record types
 const WEBHOOK_URLS = {
-  contacts: 'https://api.integration.app/webhooks/app-events/6b05b1a8-330a-40f5-b429-32243474d981',
+  activities: 'https://api.integration.app/webhooks/app-events/6b05b1a8-330a-40f5-b429-32243474d981',
   companies: '',
   // Default URL for custom objects
   custom: ''
@@ -66,7 +66,7 @@ Default record types are defined in `src/lib/constants.ts`. You can modify this 
 
 ```typescript
 export const RECORD_ACTIONS = [
-  { key: 'get-contacts', label: 'Contacts', type: 'default' },
+  { key: 'get-activities', label: 'Activities', type: 'default' },
   { key: 'get-companies', label: 'Companies', type: 'default' },
   { key: 'get-invoices', label: 'Invoices', type: 'default' },
   // Add more record types as needed
@@ -165,7 +165,7 @@ External sources should send POST requests to `/api/webhooks` with the following
 ### Payload Fields
 
 - **customerId** (required): The unique identifier for the customer/tenant
-- **recordType** (required): The type of record (e.g., "contacts", "companies", "invoices")
+- **recordType** (required): The type of record (e.g., "activities", "companies", "invoices")
 - **data** (required): The record data object
   - **id** (required): Unique identifier for the record
   - **name** (optional): Display name for the record
@@ -203,7 +203,7 @@ curl -X POST http://localhost:3000/api/webhooks \
   -H "Content-Type: application/json" \
   -d '{
     "customerId": "customer123",
-    "recordType": "contacts",
+    "recordType": "activities",
     "data": {
       "id": "contact456",
       "name": "John Doe",

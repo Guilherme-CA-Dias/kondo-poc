@@ -1,18 +1,18 @@
 export const DEFAULT_SCHEMAS = {
-	contacts: {
+	activities: {
 		properties: {
 			id: { type: "string", title: "ID" },
-			name: { type: "string", title: "Name" },
-			email: { type: "string", title: "Email", format: "email" },
-			phone: { type: "string", title: "Phone Number", format: "phone" },
+			title: { type: "string", title: "Title" },
+			description: { type: "string", title: "Description" },
 			status: {
 				type: "string",
 				title: "Status",
 				enum: ["Active", "Inactive", "Pending"],
 				default: "Active",
 			},
+			date: { type: "string", title: "Date", format: "date" },
 		},
-		required: ["id", "name", "email"],
+		required: ["id", "title", "type"],
 	},
 	companies: {
 		properties: {

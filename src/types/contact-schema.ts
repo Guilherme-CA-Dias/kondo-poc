@@ -9,7 +9,7 @@ export interface FormField {
   defaultValue?: string
 }
 
-export interface ContactFormSchema {
+export interface ActivityFormSchema {
   fields: FormField[]
 }
 

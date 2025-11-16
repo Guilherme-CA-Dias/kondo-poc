@@ -43,16 +43,14 @@ interface WebhookPayload {
 	type: "created" | "updated" | "deleted";
 	data: WebhookPayloadData;
 	customerId: string;
-	internalContactId?: string;
-	externalContactId?: string;
+	internalActivityId?: string;
+	externalActivityId?: string;
 }
 
 // Define webhook URLs for default record types
 const WEBHOOK_URLS = {
-	contacts:
-		"https://api.integration.app/webhooks/app-events/5cce9363-f191-489c-a738-a8e196be0b3e",
-	companies:
-		"https://api.integration.app/webhooks/app-events/cd9f4430-8f4e-45a4-badd-9d4666078540",
+	activities:
+		"https://api.integration.app/webhooks/app-events/ff878a9b-f2ef-4920-9326-5a208900aa8f",
 	// Default URL for custom objects
 	custom:
 		"https://api.integration.app/webhooks/app-events/19c8f829-0723-4030-9164-95398285f5da",
@@ -68,9 +66,11 @@ export async function sendToWebhook(payload: any) {
 		// Determine if this is a default or custom record type
 		const recordType = payload.data?.recordType || "";
 
-		// Check if it's a default type by looking at the full action key
+		// Check if it's a default type by looking at the full action key or the key without "get-" prefix
 		const isDefaultType = RECORD_ACTIONS.some(
-			(action) => action.key === recordType
+			(action) =>
+				action.key === recordType ||
+				action.key.replace("get-", "") === recordType
 		);
 
 		// Get the form type (remove 'get-' prefix for webhook URL lookup)

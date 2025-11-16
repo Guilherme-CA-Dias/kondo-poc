@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { useTheme } from "next-themes";
 import { Sun, Moon } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -10,6 +11,7 @@ import { Button } from "@/components/ui/button";
 export function Header() {
 	const [mounted, setMounted] = useState(false);
 	const { theme, setTheme } = useTheme();
+	const pathname = usePathname();
 
 	useEffect(() => {
 		setMounted(true);
@@ -32,28 +34,40 @@ export function Header() {
 						<div className="hidden sm:ml-6 sm:flex sm:space-x-8">
 							<Link
 								href="/"
-								className="inline-flex items-center px-1 pt-1 text-sm font-medium"
+								className="inline-flex items-center px-1 pt-1 text-sm font-medium relative"
 							>
 								Overview
+								{pathname === "/" && (
+									<span className="absolute -bottom-0.5 left-1/2 transform -translate-x-1/2 w-1.5 h-1.5 bg-blue-500 rounded-full" />
+								)}
 							</Link>
 							<Link
 								href="/integrations"
-								className="inline-flex items-center px-1 pt-1 text-sm font-medium"
+								className="inline-flex items-center px-1 pt-1 text-sm font-medium relative"
 							>
 								Integrations
+								{pathname === "/integrations" && (
+									<span className="absolute -bottom-0.5 left-1/2 transform -translate-x-1/2 w-1.5 h-1.5 bg-blue-500 rounded-full" />
+								)}
 							</Link>
 							<Link
 								href="/records"
-								className="inline-flex items-center px-1 pt-1 text-sm font-medium"
+								className="inline-flex items-center px-1 pt-1 text-sm font-medium relative"
 							>
-								Records
+								Records Received from Webhook
+								{pathname === "/records" && (
+									<span className="absolute -bottom-0.5 left-1/2 transform -translate-x-1/2 w-1.5 h-1.5 bg-blue-500 rounded-full" />
+								)}
 							</Link>
 
 							<Link
 								href="/submit-form"
-								className="inline-flex items-center px-1 pt-1 text-sm font-medium"
+								className="inline-flex items-center px-1 pt-1 text-sm font-medium relative"
 							>
-								Push information/Submit form
+								Demonstrate Record Sent to Webhook
+								{pathname === "/submit-form" && (
+									<span className="absolute -bottom-0.5 left-1/2 transform -translate-x-1/2 w-1.5 h-1.5 bg-blue-500 rounded-full" />
+								)}
 							</Link>
 						</div>
 					</div>

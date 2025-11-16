@@ -103,7 +103,7 @@ export default function RecordsPage() {
         >
           <option value="">Select record type</option>
           {forms.map((form) => {
-            // For default forms, use the standard action keys (get-contacts, get-leads, etc.)
+            // For default forms, use the standard action keys (get-activities, get-leads, etc.)
             // For custom forms, use get-objects with the form ID
             const actionKey = form.type === 'default' 
               ? `get-${form.formId}` 

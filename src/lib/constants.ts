@@ -1,7 +1,7 @@
 export const RECORD_ACTIONS = [
 	{
-		key: "get-contacts",
-		name: "Contacts",
+		key: "get-activities",
+		name: "Activities",
 		type: "default",
 	},
 	{
