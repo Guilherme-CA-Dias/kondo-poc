@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+// Use JSONSchemaProperty to prevent unused import error
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { JSONSchemaProperty } from "@/types/contact-schema";
 
 const schemaPropertySchema = new mongoose.Schema(

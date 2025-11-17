@@ -1,15 +1,7 @@
 "use client";
 
 import { useState, useEffect, useMemo } from "react";
-import { Select } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import {
-	Dialog,
-	DialogContent,
-	DialogHeader,
-	DialogTitle,
-	DialogFooter,
-} from "@/components/ui/dialog";
 import { useAuth } from "@/app/auth-provider";
 import { DataInput } from "@integration-app/react";
 import { useSchema } from "@/hooks/useSchema";
@@ -28,12 +20,14 @@ interface FormDefinition {
 }
 
 export default function SubmitFormPage() {
-	const [selectedForm, setSelectedForm] = useState("get-activities");
+	const [selectedForm] = useState("get-activities");
 	const [forms, setForms] = useState<FormDefinition[]>([]);
 	const [isLoading, setIsLoading] = useState(true);
-	const [formData, setFormData] = useState<{ fields: Record<string, any> }>({
-		fields: {},
-	});
+	const [formData, setFormData] = useState<{ fields: Record<string, unknown> }>(
+		{
+			fields: {},
+		}
+	);
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [submitSuccess, setSubmitSuccess] = useState(false);
 	const { customerId } = useAuth();
@@ -92,7 +86,7 @@ export default function SubmitFormPage() {
 
 	const handleFieldChange = (value: unknown) => {
 		setFormData({
-			fields: value as Record<string, any>,
+			fields: value as Record<string, unknown>,
 		});
 	};
 
@@ -109,7 +103,7 @@ export default function SubmitFormPage() {
 
 			// Prepare the record data
 			const recordType = selectedForm.replace("get-", "");
-			const recordData = {
+			const recordData: Record<string, unknown> = {
 				id: recordId,
 				...formData.fields,
 				recordType,

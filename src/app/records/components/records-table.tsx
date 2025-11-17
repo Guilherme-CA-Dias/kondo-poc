@@ -66,7 +66,7 @@ export function RecordsTable({
     if (!dateString) return "-";
     try {
       return new Date(dateString).toLocaleString();
-    } catch (error) {
+    } catch {
       return "-";
     }
   };

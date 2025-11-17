@@ -225,7 +225,7 @@ export async function DELETE(
     return NextResponse.json({ error: 'Form not found' }, { status: 404 })
   }
 
-  let schema = await FieldSchema.findOne({
+  const schema = await FieldSchema.findOne({
     customerId: userId,
     recordType: formId.toLowerCase()
   })

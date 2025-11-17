@@ -10,12 +10,12 @@ interface WebhookPayload {
     id: string | number;
     name?: string;
     fields?: {
-      [key: string]: any;
+      [key: string]: unknown;
     };
     createdTime?: string;
     updatedTime?: string;
     // Any other fields that might come
-    [key: string]: any;
+    [key: string]: unknown;
   };
 }
 

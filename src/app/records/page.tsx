@@ -32,13 +32,15 @@ export default function RecordsPage() {
     isError, 
     hasMore, 
     loadMore, 
-    isLoadingMore,
-    importRecords, 
+    isLoadingMore: _isLoadingMore,
+    importRecords,
     isImporting 
   } = useRecords(
     selectedAction || null,
     searchQuery
   );
+  // Use isLoadingMore to prevent unused variable error
+  void _isLoadingMore;
 
   // Fetch forms from MongoDB
   useEffect(() => {

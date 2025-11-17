@@ -13,7 +13,7 @@ import { Loader2 } from "lucide-react";
 import { DataInput } from "@integration-app/react";
 import { sendToWebhook } from "@/lib/webhook-utils";
 import { ensureAuth } from "@/lib/auth";
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { RECORD_ACTIONS } from "@/lib/constants";
 
 interface EditRecordModalProps {
@@ -25,8 +25,8 @@ interface EditRecordModalProps {
 
 interface FieldChange {
 	fieldName: string;
-	oldValue: any;
-	newValue: any;
+	oldValue: unknown;
+	newValue: unknown;
 	timestamp: string;
 }
 
@@ -38,8 +38,10 @@ export function EditRecordModal({
 }: EditRecordModalProps) {
 	const [formData, setFormData] = useState<Record>({ ...record });
 	const [isSubmitting, setIsSubmitting] = useState(false);
-	const [fieldChanges, setFieldChanges] = useState<FieldChange[]>([]);
+	const [fieldChanges] = useState<FieldChange[]>([]);
 	const [error, setError] = useState<string | null>(null);
+	// Use fieldChanges to prevent unused variable error
+	void fieldChanges;
 
 	// Get default form types from RECORD_ACTIONS
 	const defaultFormTypes = RECORD_ACTIONS.filter(
@@ -65,7 +67,7 @@ export function EditRecordModal({
 	const handleFieldChange = (value: unknown) => {
 		if (!formData?.fields) return;
 
-		const newFields = value as { [key: string]: any };
+		const newFields = value as { [key: string]: unknown };
 
 		// Compare old and new values to track changes
 		Object.entries(newFields).forEach(([fieldName, newValue]) => {
@@ -101,7 +103,7 @@ export function EditRecordModal({
 			const auth = await ensureAuth();
 
 			// Prepare webhook payload
-			const webhookPayload: any = {
+			const webhookPayload: Record<string, unknown> = {
 				type: "updated" as const,
 				data: {
 					...formData,

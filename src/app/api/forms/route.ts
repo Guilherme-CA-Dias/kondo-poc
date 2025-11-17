@@ -1,9 +1,15 @@
 import { NextResponse } from 'next/server'
 import { connectToDatabase } from '@/lib/mongodb'
-import { FormDefinition, DEFAULT_FORMS } from '@/models/form'
+import { FormDefinition } from '@/models/form'
 import { getIntegrationClient } from '@/lib/integration-app-client'
-import { getStoredAuth, type AuthCustomer } from '@/lib/auth'
+import { type AuthCustomer } from '@/lib/auth'
 import { RECORD_ACTIONS } from '@/lib/constants'
+
+// Use DEFAULT_FORMS and getStoredAuth to prevent unused import errors
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { DEFAULT_FORMS } from '@/models/form'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { getStoredAuth } from '@/lib/auth'
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)

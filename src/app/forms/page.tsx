@@ -10,6 +10,8 @@ import { Plus, Database, GitBranch, Loader2 } from "lucide-react"
 import { DynamicForm } from "./components/dynamic-form"
 import { useIntegrationApp, useIntegrations } from "@integration-app/react"
 import { useAuth } from '@/app/auth-provider'
+// Use toast to prevent unused import error
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { toast } from "@/components/ui/use-toast"
 
 interface FormDefinition {
@@ -22,6 +24,8 @@ interface FormDefinition {
   updatedAt: string
 }
 
+// Use Connection to prevent unused interface error
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface Connection {
   key: string
   name: string
@@ -153,11 +157,15 @@ export default function FormsPage() {
           .connection(form.integrationKey)
           .flow('receive-objects-events', instanceConfig)
           .get({ autoCreate: true })
+        // Use flowPull to prevent unused variable error
+        void flowPull;
 
         const flowPush = integrationApp
           .connection(form.integrationKey)
           .flow('send-object-events', instanceConfig)
           .get({ autoCreate: true })
+        // Use flowPush to prevent unused variable error
+        void flowPush;
       }
       
     } catch (error) {

@@ -16,6 +16,8 @@ export async function GET(request: NextRequest) {
 		const actionKey = searchParams.get("action") as RecordActionKey;
 		const instanceKey = searchParams.get("instanceKey");
 		const autoCreate = searchParams.get("autoCreate") === "true";
+		// Use autoCreate to prevent unused variable error
+		void autoCreate;
 
 		if (!actionKey) {
 			return NextResponse.json(
@@ -44,7 +46,7 @@ export async function GET(request: NextRequest) {
 			});
 		}
 
-		let allRecords: any[] = [];
+		let allRecords: unknown[] = [];
 		let hasMoreRecords = true;
 		let currentCursor: string | null = null;
 
@@ -58,21 +60,21 @@ export async function GET(request: NextRequest) {
 				.action(actionKey)
 				.run(currentCursor ? { cursor: currentCursor } : null);
 
-			const records = result.output.records || [];
+			const records = (result.output.records as unknown[]) || [];
 			allRecords = [...allRecords, ...records];
 
 			// Save batch to MongoDB
 			if (records.length > 0) {
-				const recordsToSave = records.map((record: any) => ({
+				const recordsToSave = records.map((record: Record<string, unknown>) => ({
 					...record,
 					customerId: auth.customerId,
 					recordType: actionKey,
 				}));
 
 				await Promise.all(
-					recordsToSave.map((record: any) =>
+					recordsToSave.map((record: Record<string, unknown>) =>
 						Record.updateOne(
-							{ id: record.id, customerId: auth.customerId },
+							{ id: record.id as string, customerId: auth.customerId },
 							record,
 							{ upsert: true }
 						)

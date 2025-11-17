@@ -4,11 +4,6 @@ export const RECORD_ACTIONS = [
 		name: "Activities",
 		type: "default",
 	},
-	{
-		key: "get-clients",
-		name: "Clients",
-		type: "default",
-	},
 ] as const;
 
 export type RecordActionKey = (typeof RECORD_ACTIONS)[number]["key"] | string;

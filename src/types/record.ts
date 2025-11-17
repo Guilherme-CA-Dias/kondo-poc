@@ -8,7 +8,7 @@ export interface Record {
 	updated_at?: string; // keep for backward compatibility
 	uri?: string;
 	fields?: {
-		[key: string]: any;
+		[key: string]: unknown;
 	};
 	recordType: string;
 }

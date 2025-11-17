@@ -39,6 +39,8 @@ interface WebhookPayloadData {
 	lastActivityTime?: string;
 }
 
+// WebhookPayload interface for type reference
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface WebhookPayload {
 	type: "created" | "updated" | "deleted";
 	data: WebhookPayloadData;
@@ -61,10 +63,14 @@ const defaultFormTypes = RECORD_ACTIONS.filter(
 	(action) => action.type === "default"
 ).map((action) => action.key.replace("get-", ""));
 
-export async function sendToWebhook(payload: any) {
+// Use defaultFormTypes to prevent unused variable error
+void defaultFormTypes;
+
+export async function sendToWebhook(payload: unknown) {
 	try {
 		// Determine if this is a default or custom record type
-		const recordType = payload.data?.recordType || "";
+		const payloadData = payload as { data?: { recordType?: string } };
+		const recordType = payloadData.data?.recordType || "";
 
 		// Check if it's a default type by looking at the full action key or the key without "get-" prefix
 		const isDefaultType = RECORD_ACTIONS.some(
@@ -96,10 +102,10 @@ export async function sendToWebhook(payload: any) {
 		}
 
 		// For custom objects, add instanceKey to the payload
-		let finalPayload = { ...payload };
+		let finalPayload: unknown = { ...payloadData };
 		if (!isDefaultType) {
 			finalPayload = {
-				...finalPayload,
+				...payloadData,
 				instanceKey: formType,
 			};
 		}

@@ -41,7 +41,7 @@ export async function GET(request: NextRequest) {
     await connectToDatabase();
     
     // Build the query
-    const query: any = {
+    const query: Record<string, unknown> = {
       customerId: auth.customerId,
       recordType: action === 'get-objects' ? instanceKey : action
     };

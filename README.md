@@ -51,10 +51,10 @@ The application sends webhook notifications for record operations (create, updat
 ```typescript
 // Define webhook URLs for default record types
 const WEBHOOK_URLS = {
-  activities: 'https://api.integration.app/webhooks/app-events/6b05b1a8-330a-40f5-b429-32243474d981',
-  companies: '',
-  // Default URL for custom objects
-  custom: ''
+	activities: "define it on file",
+	companies: "",
+	// Default URL for custom objects
+	custom: "",
 };
 ```
 
@@ -66,10 +66,8 @@ Default record types are defined in `src/lib/constants.ts`. You can modify this 
 
 ```typescript
 export const RECORD_ACTIONS = [
-  { key: 'get-activities', label: 'Activities', type: 'default' },
-  { key: 'get-companies', label: 'Companies', type: 'default' },
-  { key: 'get-invoices', label: 'Invoices', type: 'default' },
-  // Add more record types as needed
+	{ key: "get-activities", label: "Activities", type: "default" },
+	// Add more record types as needed
 ];
 ```
 
@@ -98,6 +96,7 @@ The Integrations page allows users to connect to external applications using Int
 ### Forms
 
 The Forms page allows you to create and manage custom forms with dynamic fields. You can:
+
 - Create new form types
 - Add custom fields to forms
 - Delete fields from forms
@@ -105,6 +104,7 @@ The Forms page allows you to create and manage custom forms with dynamic fields.
 ### Records
 
 The Records page displays data imported from external applications. You can:
+
 - View records by type
 - Edit records
 - Delete records
@@ -146,19 +146,19 @@ External sources should send POST requests to `/api/webhooks` with the following
 
 ```json
 {
-  "customerId": "string",
-  "recordType": "string",
-  "data": {
-    "id": "string|number",
-    "name": "string (optional)",
-    "fields": {
-      "field1": "value1",
-      "field2": "value2"
-    },
-    "createdTime": "string (optional)",
-    "updatedTime": "string (optional)",
-    "additional_fields": "any"
-  }
+	"customerId": "string",
+	"recordType": "string",
+	"data": {
+		"id": "string|number",
+		"name": "string (optional)",
+		"fields": {
+			"field1": "value1",
+			"field2": "value2"
+		},
+		"createdTime": "string (optional)",
+		"updatedTime": "string (optional)",
+		"additional_fields": "any"
+	}
 }
 ```
 
@@ -180,12 +180,12 @@ The endpoint returns a JSON response with the following structure:
 
 ```json
 {
-  "success": true,
-  "recordId": "string",
-  "_id": "mongodb_object_id",
-  "customerId": "string",
-  "recordType": "string",
-  "status": "created|updated|unchanged"
+	"success": true,
+	"recordId": "string",
+	"_id": "mongodb_object_id",
+	"customerId": "string",
+	"recordType": "string",
+	"status": "created|updated|unchanged"
 }
 ```
 
@@ -222,13 +222,15 @@ When records are created, updated, or deleted, the application sends webhook not
 
 ```json
 {
-  "type": "created|updated|deleted",
-  "data": {
-    "id": "record-id",
-    "recordType": "record-type",
-    "fields": { /* record fields */ }
-  },
-  "customerId": "customer-id"
+	"type": "created|updated|deleted",
+	"data": {
+		"id": "record-id",
+		"recordType": "record-type",
+		"fields": {
+			/* record fields */
+		}
+	},
+	"customerId": "customer-id"
 }
 ```
 

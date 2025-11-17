@@ -9,7 +9,7 @@ export interface IRecord {
   fields?: {
     domain?: string;
     industry?: string;
-    [key: string]: any;
+    [key: string]: unknown;
   };
   recordType: string;
   customerId: string;

@@ -13,7 +13,7 @@ interface WebhookEvent {
       user: {
         id: string;
         name: string;
-        fields: Record<string, any>;
+        fields: Record<string, unknown>;
         createdAt: string;
         lastActiveAt: string;
       };
@@ -23,7 +23,7 @@ interface WebhookEvent {
         key: string;
         name: string;
         authType: string;
-        parametersSchema: Record<string, any>;
+        parametersSchema: Record<string, unknown>;
         hasDefaultParameters: boolean;
         hasMissingParameters: boolean;
         hasDocumentation: boolean;
@@ -77,36 +77,36 @@ export async function POST(request: NextRequest) {
     // Import records for each action type
     for (const action of RECORD_ACTIONS) {
       try {
-        let allRecords: any[] = [];
-        let hasMoreRecords = true;
-        let currentCursor: string | null = null;
+		let allRecords: unknown[] = [];
+		let hasMoreRecords = true;
+		let currentCursor: string | null = null;
 
-        // Fetch all pages of records for this action
-        while (hasMoreRecords) {
-          const result = await client
-            .connection(connectionId)
-            .action(action.key)
-            .run(currentCursor ? { cursor: currentCursor } : null);
-          
-          const records = result.output.records || [];
-          allRecords = [...allRecords, ...records];
+		// Fetch all pages of records for this action
+		while (hasMoreRecords) {
+			const result = await client
+				.connection(connectionId)
+				.action(action.key)
+				.run(currentCursor ? { cursor: currentCursor } : null);
+			
+			const records = (result.output.records as unknown[]) || [];
+			allRecords = [...allRecords, ...records];
 
-          // Save batch to MongoDB
-          if (records.length > 0) {
-            const recordsToSave = records.map(record => ({
-              ...record,
-              customerId: event.data.connection.userId,
-              recordType: action.key,
-            }));
+			// Save batch to MongoDB
+			if (records.length > 0) {
+				const recordsToSave = records.map((record: Record<string, unknown>) => ({
+					...record,
+					customerId: event.data.connection.userId,
+					recordType: action.key,
+				}));
 
-            await Promise.all(recordsToSave.map(record => 
-              Record.updateOne(
-                { id: record.id, customerId: event.data.connection.userId },
-                record,
-                { upsert: true }
-              )
-            ));
-          }
+				await Promise.all(recordsToSave.map((record: Record<string, unknown>) => 
+					Record.updateOne(
+						{ id: record.id as string, customerId: event.data.connection.userId },
+						record,
+						{ upsert: true }
+					)
+				));
+			}
 
           currentCursor = result.output.cursor;
           hasMoreRecords = !!currentCursor;

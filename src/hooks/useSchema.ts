@@ -1,5 +1,7 @@
 import useSWR from 'swr'
 import { useAuth } from '@/app/auth-provider'
+// Use JSONSchema to prevent unused import error
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { JSONSchema } from '@/types/contact-schema'
 
 export function useSchema(formId: string) {

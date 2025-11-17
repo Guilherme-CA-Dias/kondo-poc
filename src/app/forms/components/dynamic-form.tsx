@@ -9,8 +9,6 @@ import { Select } from "@/components/ui/select"
 import { Button } from "@/components/ui/button"
 import { Trash2, Loader2 } from "lucide-react"
 import { AddFieldButton } from "./add-field-button"
-import type { JSONSchema } from "@/types/contact-schema"
-
 interface DynamicFormProps {
   recordType: string
 }
@@ -18,13 +16,13 @@ interface DynamicFormProps {
 export function DynamicForm({ recordType }: DynamicFormProps) {
   const { customerId } = useAuth()
   const { schema, isLoading, error, mutate } = useSchema(recordType)
-  const [formData, setFormData] = useState<Record<string, any>>({})
+  const [formData, setFormData] = useState<Record<string, unknown>>({})
   const [deleting, setDeleting] = useState<string | null>(null)
 
   // Initialize form data with default values when schema loads
   useEffect(() => {
     if (schema) {
-      const defaults: Record<string, any> = {}
+      const defaults: Record<string, unknown> = {}
       Object.entries(schema.properties).forEach(([name, field]) => {
         if (field.default) {
           defaults[name] = field.default
@@ -65,7 +63,7 @@ export function DynamicForm({ recordType }: DynamicFormProps) {
   if (error) return <div>Error loading form schema</div>
   if (!schema) return null
 
-  const handleInputChange = (name: string, value: any) => {
+  const handleInputChange = (name: string, value: unknown) => {
     setFormData(prev => ({
       ...prev,
       [name]: value
